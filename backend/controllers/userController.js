@@ -7,7 +7,23 @@ import generateToken from "../utils/generateToken.js";
 // route POST /api/users/auth
 // @access Public
 const authUser = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Auth user" });
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  const isValidPassword = await bcrypt.compare(password, user.password);
+
+  if (user && isValidPassword) {
+    generateToken(res, user.id);
+    res.status(201).json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or password");
+  }
 });
 
 // @desc Register a new user
@@ -29,7 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
-    password,
+    password: hashedPassword,
   });
 
   if (user) {
