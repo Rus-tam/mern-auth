@@ -9,12 +9,13 @@ import User from "./db/User.js";
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
-
-// app.get("/", (req, res) => res.send("Server is ready"));
 
 (async () => {
   try {
@@ -24,7 +25,5 @@ app.use(errorHandler);
     console.error(`Error creating tables: ${err}`);
   }
 })();
-
-console.log(process.env.POSTGRES_PASSWORD);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
