@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import User from "../db/User.js";
 import bcrypt from "bcryptjs";
+import generateToken from "../utils/generateToken.js";
 
 // @desc Auth user/set token
 // route POST /api/users/auth
@@ -32,6 +33,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    generateToken(res, user.id);
     res.status(201).json({
       id: user.id,
       name: user.name,
