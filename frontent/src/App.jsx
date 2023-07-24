@@ -1,5 +1,12 @@
+import Header from "./components/Header.jsx";
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <>
+      <Header />
+      <h1>Mern App</h1>
+    </>
+  );
 };
 
 export default App;
