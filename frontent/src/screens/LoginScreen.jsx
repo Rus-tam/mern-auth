@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
+import Loader from "../components/Loader.jsx";
 // import Loader from "../components/Loader";
 
 const LoginScreen = () => {
@@ -71,7 +72,7 @@ const LoginScreen = () => {
         </Button>
       </Form>
 
-      {/*{isLoading && <Loader />}*/}
+      {isLoading && <Loader />}
 
       <Row className="py-3">
         <Col>
